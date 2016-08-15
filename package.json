@@ -20,9 +20,9 @@
   "author": "Dennis Cheong",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/elco45/Progra4_project/issues"
+    "url": "https://github.com/elco45/analisis1_backend"
   },
-  "homepage": "https://github.com/elco45/Progra4_project",
+  "homepage": "https://github.com/elco45/analisis1_backend",
   "dependencies": {
     "boom": "^3.0.0",
     "crypto-js": "^3.1.5",
