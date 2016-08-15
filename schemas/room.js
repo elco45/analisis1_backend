@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 var RoomSchema = new mongoose.Schema({
-	available: Number,
+	availability: Number,
 	idUser: String,
 	priority: Number
 });
