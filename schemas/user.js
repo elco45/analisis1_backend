@@ -6,7 +6,8 @@ var UserSchema = new mongoose.Schema({
   password : {type: String, required: true},
   name: String,
   employee_type: Number,
-  status: Boolean
+  status: Boolean,
+  role: Number
 });
 
 UserSchema.plugin(uniqueValidator);
