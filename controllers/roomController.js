@@ -5,15 +5,19 @@ var room = require('../schemas/room');
 //habitaciones
 
 exports.createRoom = {
-	handler: function(request, reply) {
- 
-  		var habitacion = new room({
-  			status: request.payload.status,
-  			room_id: request.payload.room_id,
-  			idUser: request.payload.idUser,
-  			priority: request.payload.priority,
-  			observation: request.payload.observation
-  		});
+  auth: {
+    mode:'required',
+    strategy:'session'
+  },
+  handler: function(request, reply) {
+
+    var habitacion = new room({
+     status: request.payload.status,
+     room_id: request.payload.room_id,
+     idUser: request.payload.idUser,
+     priority: request.payload.priority,
+     observation: request.payload.observation
+   });
   	  //Guardando
   	  habitacion.save(function (err) {
   	  	if(err){
@@ -21,11 +25,15 @@ exports.createRoom = {
   	  	}else{
   	  		return reply('Agregado exitosamente ');
         }//fin else
-    });
+      });
   	}
   };
   // Modificar las habitaciones
-   exports.modifRoom = {
+    exports.modifRoom = {
+    auth: {
+      mode:'required',
+      strategy:'session'
+    },
     handler: function(request, reply) {
       var habitacion = room.findOne({room_id:request.payload.room_id},function(err,answer){
         answer.status = request.payload.status,
@@ -38,19 +46,27 @@ exports.createRoom = {
     }
   };
 //Eliminar  Room
- exports.deleteRoom={
-    handler: function(request, reply){
-       room.findOneAndRemove({ room_id:request.payload.room_id }, function(err) {
-      if (err) {
-        throw err;
-      } 
-      return reply('Eliminado exitosamente');
-    });
-  }
+exports.deleteRoom={
+  auth: {
+    mode:'required',
+    strategy:'session'
+  },
+  handler: function(request, reply){
+   room.findOneAndRemove({ room_id:request.payload.room_id }, function(err) {
+    if (err) {
+      throw err;
+    } 
+    return reply('Eliminado exitosamente');
+  });
+ }
 };
 //GET DE HABITACIONES
 exports.getRoom = {
-   handler: function(request, reply){
+  auth: {
+    mode:'required',
+    strategy:'session'
+  },
+  handler: function(request, reply){
     var habitacion = room.find({room_id: request.payload.room_id},function(err,data){
       if(!err){
         var new_room = {
@@ -60,15 +76,15 @@ exports.getRoom = {
           observation: data[0].observation,
           
         }     
-      console.log(new_room);
+        console.log(new_room);
         return reply(new_room);
 
       }else{
         return reply(err);
       }
     });
- 
-  
+
+
   }
 }
 
