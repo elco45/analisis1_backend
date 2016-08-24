@@ -31,16 +31,15 @@ exports.createUser = {
   };
   //Metodo para Modificar  usuario
   exports.modifUser = {
-  	auth: {
-  		mode:'required',
-  		strategy:'session'
-  	},
   	handler: function(request, reply) {
+      console.log("===========")
+      console.log(request.payload)
   		var usuario = user.findOne({username:request.payload.username},function(err,answer){
+        
         if(request.payload.password){          
            answer.password = SHA3(request.payload.password)
         }
-  			answer.name= request.payload.name
+  			answer.name= request.payload.nombre
   			answer.employee_type= request.payload.employee_type
   			answer.status= request.payload.status
   			answer.role= request.payload.role
