@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 var RoomSchema = new mongoose.Schema({
-	status: Number,
+	status: Number,//este es el estado de si esta siendo usada o no// 0 = neutral  1 = por limpiar, 2 = limpia, 3 = no limpiada(observaciones)
 	room_id: {type: Number, unique: true, required: true},
 	idUser: String,
 	priority: Number,

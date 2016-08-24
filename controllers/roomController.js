@@ -5,10 +5,10 @@ var room = require('../schemas/room');
 //habitaciones
 
 exports.createRoom = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session'
-  },
+  },*/
   handler: function(request, reply) {
 
     var habitacion = new room({
@@ -82,6 +82,21 @@ exports.getRoom = {
       }else{
         return reply(err);
       }
+    });
+
+
+  }
+}
+
+//get all rooms
+exports.getAllRooms = {
+  /*: {
+    mode:'required',
+    strategy:'session'
+  },*/
+  handler: function(request, reply){
+    var habitacion = room.find({},function(err,data){
+      return reply(data)
     });
 
 
