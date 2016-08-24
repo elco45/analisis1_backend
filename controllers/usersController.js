@@ -8,7 +8,8 @@ exports.createUser = {
 		strategy:'session'
 	},*/
 	handler: function(request, reply) {
-		console.log(request.payload);
+		console.log("Es esto:   "+request.payload);
+
 		var usuario = new user({
 			username: request.payload.username,
 			password:SHA3(request.payload.password),
@@ -36,10 +37,12 @@ exports.createUser = {
   	},
   	handler: function(request, reply) {
   		var usuario = user.findOne({username:request.payload.username},function(err,answer){
-  			answer.password = SHA3(request.payload.password),
-  			answer.name= request.payload.nombre,
-  			answer.employee_type= request.payload.employee_type,
-  			answer.status= request.payload.status,
+        if(request.payload.password){          
+           answer.password = SHA3(request.payload.password)
+        }
+  			answer.name= request.payload.name
+  			answer.employee_type= request.payload.employee_type
+  			answer.status= request.payload.status
   			answer.role= request.payload.role
   			answer.save();
   			return reply(answer);
@@ -64,22 +67,25 @@ exports.createUser = {
   };
 
   exports.getUser = {
-  	auth: {
-  		mode:'required',
-  		strategy:'session'
-  	},
+  	
   	handler: function(request, reply){
-  		var usuario = user.find({username: request.payload.username},function(err,data){
+  		var usuario = user.find({},function(err,data){
+        console.log(data)
   			if(!err){
-  				var new_user = {
-  					username: data[0].username, 	
-  					name: data[0].name,
-  					employee_type: data[0].employee_type,
-  					status: data[0].status,
-  					role: data[0].role 
-  				}			
-  				console.log(new_user);
-  				return reply(new_user);
+          var array = [];
+          for (var i = 0; i < data.length; i++) {
+            var new_user = {
+              username: data[i].username,   
+              name: data[i].name,
+              employee_type: data[i].employee_type,
+              status: data[i].status,
+              role: data[i].role 
+            } 
+            array.push(new_user);
+          };
+				  console.log("avb")
+  				console.log(array);
+  				return reply(array);
 
   			}else{
   				return reply(err);
