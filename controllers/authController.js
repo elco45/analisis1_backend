@@ -21,6 +21,8 @@ exports.login = {
               status: data[0].status,role:data[0].role});
             entro = true;
           }
+        }else{
+          return reply("error") 
         }
       })
 

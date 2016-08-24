@@ -96,3 +96,11 @@ exports.createUser = {
 }
 }
 
+exports.getEmployee = {
+    handler:function(request,reply){
+      var empleado = user.find({role: 1});
+      reply(empleado);
+    }
+
+}
+
