@@ -6,6 +6,7 @@ exports.endpoints = [{method: 'GET', path: '/', config: {handler: function(reque
 					 {method: 'POST', path: '/v1/updateUser', config: usersController.modifUser},
 					 {method: 'DELETE', path: '/v1/deleteUser', config: usersController.deleteUser},
 					 {method: 'POST', path: '/v1/getUser', config: usersController.getUser},
+					 {method: 'GET', path : '/v1/getEmployees', config: usersController.getEmployee},
 					 {method: 'POST', path: '/v1/registerRoom', config: roomController.createRoom},
 					 {method: 'POST', path: '/v1/updateRoom', config: roomController.modifRoom},
 					 {method: 'DELETE', path: '/v1/deleteRoom', config: roomController.deleteRoom},
