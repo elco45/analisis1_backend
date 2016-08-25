@@ -18,15 +18,15 @@ exports.createRoom = {
      priority: request.payload.priority,
      observation: request.payload.observation
    });
-  	  //Guardando
-  	  habitacion.save(function (err) {
-  	  	if(err){
-  	  		return reply(boom.notAcceptable('La habitacion debe ser unica ' + err));
-  	  	}else{
-  	  		return reply('Agregado exitosamente ');
+      //Guardando
+      habitacion.save(function (err) {
+        if(err){
+          return reply(boom.notAcceptable('La habitacion debe ser unica ' + err));
+        }else{
+          return reply('Agregado exitosamente ');
         }//fin else
       });
-  	}
+    }
   };
   // Modificar las habitaciones
     exports.modifRoom = {
