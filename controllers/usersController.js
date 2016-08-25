@@ -8,7 +8,7 @@ exports.createUser = {
 		strategy:'session'
 	},*/
 	handler: function(request, reply) {
-		console.log("Es esto:   "+request.payload);
+		//console.log("Es esto:   "+request.payload);
 
 		var usuario = new user({
 			username: request.payload.username,
@@ -16,7 +16,17 @@ exports.createUser = {
 			name: request.payload.name,
 			employee_type: request.payload.employee_type,
 			status: false,
-			role: request.payload.role
+			role: request.payload.role,
+      id: request.payload.id,
+      cel: request.payload.cel,
+      tel: request.payload.tel,
+      direction: request.payload.direction,
+      birth_date: request.payload.birth_date,// dia/mes/año
+      civil_status: request.payload.civil_status,
+      children: request.payload.children,
+    //  schedule : [],
+      observation: request.payload.observation,
+      photo: request.payload.photo
 
 		});
   	  //Guardando
@@ -32,8 +42,7 @@ exports.createUser = {
   //Metodo para Modificar  usuario
   exports.modifUser = {
   	handler: function(request, reply) {
-      console.log("===========")
-      console.log(request.payload)
+      
   		var usuario = user.findOne({username:request.payload.username},function(err,answer){
         
         if(request.payload.password){          
@@ -43,6 +52,14 @@ exports.createUser = {
   			answer.employee_type= request.payload.employee_type
   			answer.status= request.payload.status
   			answer.role= request.payload.role
+        answer.cel = request.payload.cel
+        answer.tel = request.payload.tel
+        answer.direction = request.payload.direction
+        answer.civil_status = request.payload.civil_status
+        answer.children = request.payload.children
+      //  schedule : [],
+        answer.observation = request.payload.observation
+        answer.photo = request.payload.photo
   			answer.save();
   			return reply(answer);
   		});
@@ -78,12 +95,21 @@ exports.createUser = {
               name: data[i].name,
               employee_type: data[i].employee_type,
               status: data[i].status,
-              role: data[i].role 
+              role: data[i].role,
+              id: data[i].id,
+              cel: data[i].cel,
+              tel: data[i].tel,
+              direction: data[i].direction,
+              birth_date: data[i].birth_date,// dia/mes/año
+              civil_status: data[i].civil_status,
+              children: data[i].children,
+            //  schedule : [],
+              observation: data[i].observation,
+              photo: data[i].photo 
             } 
             array.push(new_user);
           };
-				  console.log("avb")
-  				console.log(array);
+				 
   				return reply(array);
 
   			}else{
@@ -97,8 +123,37 @@ exports.createUser = {
 
 exports.getEmployee = {
     handler:function(request,reply){
-      var empleado = user.find({role: 1});
-      reply(empleado);
+      var usuario = user.find({role: 1},function(err,data){
+        console.log(data)
+        if(!err){
+          var array = [];
+          for (var i = 0; i < data.length; i++) {
+            var new_user = {
+              username: data[i].username,   
+              name: data[i].name,
+              employee_type: data[i].employee_type,
+              status: data[i].status,
+              role: data[i].role,
+              id: data[i].id,
+              cel: data[i].cel,
+              tel: data[i].tel,
+              direction: data[i].direction,
+              birth_date: data[i].birth_date,// dia/mes/año
+              civil_status: data[i].civil_status,
+              children: data[i].children,
+            //  schedule : [],
+              observation: data[i].observation,
+              photo: data[i].photo 
+            } 
+            array.push(new_user);
+          };
+         
+          return reply(array);
+
+        }else{
+          return reply(err);
+        }
+      });
     }
 
 }
