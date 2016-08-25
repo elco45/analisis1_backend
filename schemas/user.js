@@ -7,7 +7,17 @@ var UserSchema = new mongoose.Schema({
   name: String,
   employee_type: Number,
   status: Boolean,
-  role: Number
+  role: Number,
+  id: String,
+  cel: Number,
+  tel: Number,
+  direction: String,
+  birth_date: String,// dia/mes/año
+  civil_status: String,
+  children: Number,
+//  schedule : [],
+  observation: String,
+  photo: String
 });
 
 UserSchema.plugin(uniqueValidator);
