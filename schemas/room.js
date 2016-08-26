@@ -5,6 +5,7 @@ var RoomSchema = new mongoose.Schema({
 	room_id: {type: Number, unique: true, required: true},
 	idUser: [],
 	priority: Number,
+	time_reserved: String,
 	observation: String
 });
 

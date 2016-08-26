@@ -2,8 +2,6 @@ var SHA3 = require("crypto-js/sha3");
 var boom = require('boom');
 var room = require('../schemas/room');
 
-//habitaciones
-
 exports.createRoom = {
   /*auth: {
     mode:'required',
@@ -16,7 +14,8 @@ exports.createRoom = {
      room_id: request.payload.room_id,
      idUser: request.payload.idUser,
      priority: request.payload.priority,
-     observation: request.payload.observation
+     observation: request.payload.observation,
+     time_reserved: "0hr"
    });
       //Guardando
       habitacion.save(function (err) {
@@ -39,7 +38,8 @@ exports.createRoom = {
         answer.status = request.payload.status,
         answer.idUser = request.payload.idUser,
         answer.priority= request.payload.priority,
-        answer.observation= request.payload.observation
+        answer.observation= request.payload.observation,
+        answer.time_reserved = request.payload.time_reserved
         answer.save();
         return reply(answer);
       });
@@ -74,6 +74,7 @@ exports.getRoom = {
           idUser: data[0].idUser,
           priority: data[0].priority,
           observation: data[0].observation,
+          time_reserved: data[0].time_reserved
           
         }     
         console.log(new_room);
