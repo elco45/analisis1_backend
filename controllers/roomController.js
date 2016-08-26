@@ -30,10 +30,10 @@ exports.createRoom = {
   };
   // Modificar las habitaciones
     exports.modifRoom = {
-    auth: {
+    /*auth: {
       mode:'required',
       strategy:'session'
-    },
+    },*/
     handler: function(request, reply) {
       var habitacion = room.findOne({room_id:request.payload.room_id},function(err,answer){
         answer.status = request.payload.status,
