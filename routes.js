@@ -13,6 +13,7 @@ exports.endpoints = [{method: 'GET', path: '/', config: {handler: function(reque
 					 {method: 'GET', path: '/v1/getRoom', config: roomController.getRoom},
 					 {method: 'GET', path: '/v1/getAllRooms', config: roomController.getAllRooms},
 					 {method: 'POST', path: '/v1/login', config: authController.login},
-					 {method: 'GET', path: '/v1/logout', config: authController.logout}
+					 {method: 'GET', path: '/v1/logout', config: authController.logout},
+					 {method: 'POST', path: '/v1/getRoomEmpleado', config: roomController.getemproom}
 
 				];

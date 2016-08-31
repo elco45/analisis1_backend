@@ -103,4 +103,15 @@ exports.getAllRooms = {
 
   }
 }
+exports.getemproom={
+ 
+   handler: function(request, reply){
+    var habitacion = room.find({},function(err,data){
+       console.log(data)
+      return reply(data)
+    });
 
+
+  }
+
+}
