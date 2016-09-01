@@ -190,3 +190,13 @@ exports.updateDistributedRooms = {
       }*/
   }
 }
+
+exports.getemproom={
+ 
+   handler: function(request, reply){
+    var habitacion = room.find({},function(err,data){
+      console.log()
+      return reply(data)
+    });
+  }
+}

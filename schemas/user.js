@@ -22,3 +22,4 @@ var UserSchema = new mongoose.Schema({
 
 UserSchema.plugin(uniqueValidator);
 module.exports = mongoose.model('User', UserSchema);
+
