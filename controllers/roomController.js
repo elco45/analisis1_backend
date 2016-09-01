@@ -103,9 +103,30 @@ exports.getAllRooms = {
   }
 }
 
+exports.updateReDistributedRooms = {
+  handler:function(request,reply){  
+
+     console.log(request.payload)  
+     var habitacion = room.findOne({room_id:request.payload.room_id},function(err,room){
+        room.status = room.status
+        for(var i = 0; i < room.idUser.length; i++) {
+          if(room.idUser[i].username === request.payload.previous_user){
+            room.idUser.splice(i,1)
+            break;
+          }
+        }
+        room.idUser.push(request.payload.next_user)
+        room.priority=room.priority
+        room.observation=room.observation 
+        room.time_reserved =room.time_reserved 
+        room.save();
+        return reply(room);
+      });
+  }
+}
 exports.updateDistributedRooms = {
-  handler: function(request,reply){
-     console.log(request.payload)
+  handler: function(request,reply){/*
+     console.log(request.payload)*/
      var habitacion = room.findOne({room_id:request.payload.room_id},function(err,room){
         room.status = room.status,
         room.idUser.push(request.payload.employee),

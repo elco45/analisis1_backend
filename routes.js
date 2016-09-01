@@ -14,6 +14,7 @@ exports.endpoints = [{method: 'GET', path: '/', config: {handler: function(reque
 					 {method: 'GET', path: '/v1/getAllRooms', config: roomController.getAllRooms},
 					 {method: 'POST', path: '/v1/login', config: authController.login},
 					 {method: 'POST', path: '/v1/saveDistributedRooms', config: roomController.updateDistributedRooms},
+					 {method: 'POST', path: '/v1/swapDistributedRooms', config: roomController.updateReDistributedRooms},
 					 {method: 'GET', path: '/v1/logout', config: authController.logout}
 
 				];
