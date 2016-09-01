@@ -72,7 +72,6 @@ exports.createUser = {
   		strategy:'session'
   	},
   	handler: function(request, reply){
-  		console.log(request.payload.username)
   		user.findOneAndRemove({ username:request.payload.username }, function(err) {
   			if (err) {
   				throw err;
@@ -86,7 +85,6 @@ exports.createUser = {
   	
   	handler: function(request, reply){
   		var usuario = user.find({},function(err,data){
-        console.log(data)
   			if(!err){
           var array = [];
           for (var i = 0; i < data.length; i++) {
@@ -124,7 +122,6 @@ exports.createUser = {
 exports.getEmployee = {
     handler:function(request,reply){
       var usuario = user.find({role: 1},function(err,data){
-        console.log(data)
         if(!err){
           var array = [];
           for (var i = 0; i < data.length; i++) {
