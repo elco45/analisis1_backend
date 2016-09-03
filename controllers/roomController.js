@@ -78,12 +78,13 @@ exports.createRoom = {
       strategy:'session'
     },*/
     handler: function(request, reply) {
-      var habitacion = room.findOne({room_id:request.payload.room_id},function(err,answer){
-        answer.status = request.payload.status,
-        answer.idUser = request.payload.idUser,
-        answer.priority= request.payload.priority,
-        answer.observation= request.payload.observation,
-        answer.time_reserved = request.payload.time_reserved
+      var habitacion = room.findOne({room_id:request.payload.room.room_id},function(err,answer){
+        answer.room_id = request.payload.room.room_id,
+        answer.status = request.payload.room.status,
+        answer.idUser = request.payload.room.idUser,
+        answer.priority= request.payload.room.priority,
+        answer.observation= request.payload.room.observation,
+        answer.time_reserved = request.payload.room.time_reserved
         answer.save();
         return reply(answer);
       });
