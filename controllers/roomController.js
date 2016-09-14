@@ -10,7 +10,7 @@ var current_minutes = date.getMinutes();
 var current_seconds = date.getSeconds();
 
 var ms_in_day = 24*60*60*1000
-var ms_in_hour_to_reset = 19*60*60*1000 + 57*60*1000
+var ms_in_hour_to_reset = 21*60*60*1000 + 20*60*1000
 current_hour = current_hour* 60 * 60 *1000
 current_minutes = current_minutes * 60 * 1000
 current_seconds = current_seconds * 1000
@@ -24,8 +24,10 @@ if(current_time <= ms_in_hour_to_reset){
   ms_till_reset = ms_in_day - current_time +  ms_in_hour_to_reset
 }
 console.log(ms_till_reset)
+/*
 setInterval(function() {
      ms_till_reset = ms_in_day;
+     console.log(ms_till_reset)
      console.log("entreee")
      var habitacion = room.find({},function(err,data){
         for (var i = 0; i < data.length; i++) {
@@ -43,7 +45,7 @@ setInterval(function() {
 
 
 }, ms_till_reset);
-
+*/
 //-----
 
 exports.createRoom = {
@@ -170,16 +172,16 @@ exports.updateReDistributedRooms = {
   }
 }
 exports.updateDistributedRooms = {
-  handler: function(request,reply){/*
-     console.log(request.payload)*/
-     var habitacion = room.findOne({room_id:request.payload.room_id},function(err,room){
-        room.status = room.status,
-        room.idUser.push(request.payload.employee),
-        room.priority=room.priority
-        room.observation=room.observation ,
-        room.time_reserved =room.time_reserved 
-        room.save();
-        return reply(room);
+  handler: function(request,reply){
+     console.log(request.payload)
+     var habitacion = room.findOne({room_id:request.payload.room_id.room_id},function(err,response){
+        response.status = response.status,
+        response.idUser.push(request.payload.employee),
+        response.priority=response.priority
+        response.observation=response.observation ,
+        response.time_reserved =response.time_reserved 
+        response.save();
+        return reply(response);
       });
     /*for (var i = 0; i < request.payload.length; i++) {
       for (var i = 0; i < request.payload[i].habitacion.length; i++) {
