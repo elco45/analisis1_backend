@@ -173,7 +173,6 @@ exports.updateReDistributedRooms = {
 }
 exports.updateDistributedRooms = {
   handler: function(request,reply){
-     console.log(request.payload)
      var habitacion = room.findOne({room_id:request.payload.room_id.room_id},function(err,response){
         response.status = response.status,
         response.idUser.push(request.payload.employee),
