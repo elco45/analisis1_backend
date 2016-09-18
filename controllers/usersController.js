@@ -1,7 +1,7 @@
 var SHA3 = require("crypto-js/sha3");
 var boom = require('boom');
 var user = require('../schemas/user');
-
+var control = require('../schemas/control');
 exports.createUser = {
 	/*auth: {
 		mode:'required',
@@ -32,9 +32,15 @@ exports.createUser = {
   	  //Guardando
   	  usuario.save(function (err) {
   	  	if(err){
-  	  		return reply(boom.notAcceptable('El usuario debe ser unico ' + err));
+  	  		return reply('El usuario debe ser unico ' + err);
   	  	}else{
-  	  		return reply('Agregado exitosamente ');
+          var ctrl = new control({
+            username: request.payload.username,
+            last_change_seen : true
+          });
+          ctrl.save(function(){
+  	  		 return reply('Agregado exitosamente ');
+          })
         }//fin else
     });
   	}
