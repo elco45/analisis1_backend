@@ -162,7 +162,7 @@ exports.getAllRooms = {
 exports.updateReDistributedRooms = {
   handler:function(request,reply){  
  
-     var habitacion = room.findOne({room_id:request.payload.room_id},function(err,room){
+     var habitacion = room.findOne({room_id:request.payload.room.room_id},function(err,room){
         room.status = room.status
         for(var i = 0; i < room.idUser.length; i++) {
           if(room.idUser[i].username === request.payload.previous_user){
@@ -171,7 +171,7 @@ exports.updateReDistributedRooms = {
           }
         }
         room.idUser.push(request.payload.next_user)
-        room.priority=room.priority
+        room.priority=request.payload.room.priority
         room.observation=room.observation 
         room.time_reserved =room.time_reserved 
         room.save(function(error1){
@@ -189,14 +189,15 @@ exports.updateReDistributedRooms = {
       });
   }
 }
+
 exports.updateDistributedRooms = {
   handler: function(request,reply){
+    console.log("LLEGO")
+
      var habitacion = room.findOne({room_id:request.payload.room.room_id},function(err,response){
-        response.status = response.status,
-        response.idUser = request.payload.room.idUser,
-        response.priority=response.priority
-        response.observation=response.observation ,
-        response.time_reserved =response.time_reserved 
+        response.status = response.status
+        response.idUser = request.payload.room.idUser
+        response.priority=request.payload.room.priority
         response.save(function(error1){
           var ctrl= control.find({},function(error2,respuesta){
             for (var i = 0; i < respuesta.length; i++) {
