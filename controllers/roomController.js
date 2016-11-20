@@ -192,8 +192,6 @@ exports.updateReDistributedRooms = {
 
 exports.updateDistributedRooms = {
   handler: function(request,reply){
-    console.log("LLEGO")
-
      var habitacion = room.findOne({room_id:request.payload.room.room_id},function(err,response){
         response.status = response.status
         response.idUser = request.payload.room.idUser
@@ -236,5 +234,15 @@ exports.updateControl = {
       data.save()
       return reply(data);
     })
+  }
+}
+
+exports.updatePriorityAfterSplice = {
+  handler: function(request,reply){
+    var habitacion = room.findOne({room_id:request.payload.room.room_id},function(err,response){
+      response.priority=request.payload.room.priority
+      response.save();
+    });
+    return reply('ok');
   }
 }
