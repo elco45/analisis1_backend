@@ -18,6 +18,6 @@ exports.endpoints = [{method: 'GET', path: '/', config: {handler: function(reque
 					 {method: 'POST', path: '/v1/swapDistributedRooms', config: roomController.updateReDistributedRooms},
 					 {method: 'GET', path: '/v1/logout', config: authController.logout},
 					 {method: 'POST', path: '/v1/checkForChanges', config: roomController.checkForChanges},
-					 {method: 'POST', path: '/v1/updateControl', config: roomController.updateControl}
-
+					 {method: 'POST', path: '/v1/updateControl', config: roomController.updateControl},
+					 {method: 'POST', path: '/v1/updatePriorityAfterSplice', config: roomController.updatePriorityAfterSplice}
 				];
