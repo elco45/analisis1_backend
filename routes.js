@@ -1,6 +1,7 @@
 var usersController = require('./controllers/usersController');
 var roomController = require('./controllers/roomController');
 var authController = require('./controllers/authController');
+var historyController = require('./controllers/historyController');
 exports.endpoints = [{method: 'GET', path: '/', config: {handler: function(request, reply){reply('API v1, productos')}}},
 					 {method: 'POST', path: '/v1/register', config: usersController.createUser},
 					 {method: 'POST', path: '/v1/updateUser', config: usersController.modifUser},
@@ -19,5 +20,6 @@ exports.endpoints = [{method: 'GET', path: '/', config: {handler: function(reque
 					 {method: 'GET', path: '/v1/logout', config: authController.logout},
 					 {method: 'POST', path: '/v1/checkForChanges', config: roomController.checkForChanges},
 					 {method: 'POST', path: '/v1/updateControl', config: roomController.updateControl},
-					 {method: 'POST', path: '/v1/updatePriorityAfterSplice', config: roomController.updatePriorityAfterSplice}
+					 {method: 'POST', path: '/v1/updatePriorityAfterSplice', config: roomController.updatePriorityAfterSplice},
+					 {method: 'GET', path: '/v1/getReports', config: historyController.getReports}
 				];
