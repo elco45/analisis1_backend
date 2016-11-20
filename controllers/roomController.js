@@ -193,7 +193,6 @@ exports.updateReDistributedRooms = {
 exports.updateDistributedRooms = {
   handler: function(request,reply){
      var habitacion = room.findOne({room_id:request.payload.room.room_id},function(err,response){
-        response.status = response.status
         response.idUser = request.payload.room.idUser
         response.priority=request.payload.room.priority
         response.save(function(error1){
