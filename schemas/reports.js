@@ -2,12 +2,11 @@ var mongoose = require('mongoose');
 //var uniqueValidator = require('mongoose-unique-validator');
 
 var ReportSchema = new mongoose.Schema({
-  employee_id: String,
-  employee_name: String,
+  employee_username: String,
   room_number: Number,
-  observation: String,
+  problem_id: Number,
   room_state: String,
-  date: Date
+  date_reported: Date
 });
 
 //ReportSchema.plugin(uniqueValidator);
