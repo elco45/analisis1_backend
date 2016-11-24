@@ -17,7 +17,8 @@ var UserSchema = new mongoose.Schema({
   children: Number,
 //  schedule : [],
   observation: String,
-  photo: String
+  photo: String,
+  pin: Number
 });
 
 UserSchema.plugin(uniqueValidator);

@@ -22,5 +22,8 @@ exports.endpoints = [{method: 'GET', path: '/', config: {handler: function(reque
 					 {method: 'POST', path: '/v1/updateControl', config: roomController.updateControl},
 					 {method: 'POST', path: '/v1/updatePriorityAfterSplice', config: roomController.updatePriorityAfterSplice},
 					 {method: 'GET', path: '/v1/getReports', config: historyController.getReports},
-					 {method: 'POST', path: '/v1/createRegister', config: historyController.createRegister}
+					 {method: 'POST', path: '/v1/createRegister', config: historyController.createRegister},
+					 {method: 'POST', path: '/v1/loginWithPin', config: authController.loginWithPin},
+					 {method: 'POST', path: '/v1/modifyPin', config: usersController.modifyPin}
+
 				];

@@ -35,3 +35,29 @@ exports.logout = {
     return reply('Logout Successful!');
   }
 }
+
+exports.loginWithPin = {
+  auth: false,
+  validate: {
+    payload: {
+      username: joi.string().required(),
+      pin: joi.string().max(4).required()
+    }
+  },
+  handler: function(request, reply) {
+      var entro = false;
+      user.find({username: request.payload.username, pin: request.payload.pin}, function(err, data){
+        if(!err){
+          if(user.length > 0){
+            //request.auth.session.set(user[0]);
+            return reply({username: data[0].username, name:data[0].name,employee_type:data[0].employee_type,
+              status: data[0].status,role:data[0].role});
+            entro = true;
+          }
+        }else{
+          return reply("error") 
+        }
+      })
+
+  }
+}

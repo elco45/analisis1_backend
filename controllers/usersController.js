@@ -26,7 +26,8 @@ exports.createUser = {
       children: request.payload.children,
     //  schedule : [],
       observation: request.payload.observation,
-      photo: request.payload.photo
+      photo: request.payload.photo,
+      pin: null
 
 		});
   	  //Guardando
@@ -57,6 +58,7 @@ exports.createUser = {
   			answer.name= request.payload.nombre
   			answer.employee_type= request.payload.employee_type
   			answer.status= request.payload.status
+        answer.pin = request.payload.pin
   			answer.role= request.payload.role
         answer.cel = request.payload.cel
         answer.tel = request.payload.tel
@@ -146,7 +148,8 @@ exports.getEmployee = {
               children: data[i].children,
             //  schedule : [],
               observation: data[i].observation,
-              photo: data[i].photo 
+              photo: data[i].photo,
+              pin: data[i].pin 
             } 
             array.push(new_user);
           };
@@ -159,4 +162,15 @@ exports.getEmployee = {
       });
     }
 
+}
+
+exports.modifyPin = {
+  handler: function(request, reply) {
+      
+      var usuario = user.findOne({username:request.payload.username},function(err,answer){
+        answer.pin= request.payload.pin;        
+        answer.save();
+        return reply(answer);
+      });
+    }
 }
