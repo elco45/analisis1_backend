@@ -6,7 +6,8 @@ var ReportSchema = new mongoose.Schema({
   room_number: Number,
   problem_id: Number,
   room_state: String,
-  date_reported: Date
+  date_reported: Date,
+  resolved: Boolean
 });
 
 //ReportSchema.plugin(uniqueValidator);
