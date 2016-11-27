@@ -20,7 +20,8 @@ exports.createRegister = {
 	    	room_number: request.payload.room_number,
 	    	problem_id: request.payload.problem_id,
 	    	room_state: request.payload.room_state,
-	    	date_reported: request.payload.date_reported
+	    	date_reported: request.payload.date_reported,
+        resolved: request.payload.resolved
 	   	});
 		//Guardando
 		reporte.save(function (err) {
