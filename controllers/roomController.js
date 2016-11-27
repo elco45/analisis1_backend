@@ -2,6 +2,7 @@ var SHA3 = require("crypto-js/sha3");
 var boom = require('boom');
 var room = require('../schemas/room');
 var control = require('../schemas/control');
+var settings = require('../schemas/settings')
 
 //set timer to restart the asigned rooms at 5 AM
 
@@ -235,6 +236,30 @@ exports.updateControl = {
     })
   }
 }
+exports.saveSettings = {
+  handler: function(request,reply){
+    var setting = settings.find({},function(err,data){
+      if(data.length == 0){//no hay settings
+        var new_settings = new settings({
+          pin_login: request.payload.pin_login
+        })
+        new_settings.save();
+        return reply(new_settings)
+      }else{
+        data[0].pin_login = request.payload.pin_login;
+        data[0].save();
+        return reply(data[0]);
+      }
+    })
+  }
+}
+exports.getSettings = {
+  handler: function(request,reply){
+    var setting = settings.find({},function(err,data){
+      return reply(data[0]);
+    })
+  }
+}
 
 exports.updatePriorityAfterSplice = {
   handler: function(request,reply){
@@ -245,3 +270,4 @@ exports.updatePriorityAfterSplice = {
     return reply('ok');
   }
 }
+
