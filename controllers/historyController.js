@@ -21,7 +21,9 @@ exports.createRegister = {
 	    	problem_id: request.payload.problem_id,
 	    	room_state: request.payload.room_state,
 	    	date_reported: request.payload.date_reported,
-        resolved: request.payload.resolved
+        resolved: request.payload.resolved,
+        seen:false
+
 	   	});
 		//Guardando
 		reporte.save(function (err) {
@@ -53,7 +55,8 @@ exports.getResolved = {
         answer.problem_id = request.payload.problem_id,
         answer.room_state= request.payload.room_state,
         answer.date_reported= request.payload.date_reported,
-        answer.resolved = request.payload.resolved
+        answer.resolved = request.payload.resolved,
+        answer.seen = request.payload.seen,
         answer.save(function(error1){//Actualizar estado de problemas
           var ctrl= control.find({},function(error2,respuesta){
             for (var i = 0; i < respuesta.length; i++) {
@@ -69,3 +72,14 @@ exports.getResolved = {
       });
     }
   };
+
+
+
+  exports.getSeenReports = {
+    handler: function(request, reply){
+      var reporte = report.find({resolved: false,seen: false},function(err,data){
+        return reply(data)
+      });
+
+    }
+  }
