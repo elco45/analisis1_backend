@@ -29,7 +29,8 @@ exports.endpoints = [{method: 'GET', path: '/', config: {handler: function(reque
 					 {method: 'POST', path: '/v1/modifyPin', config: usersController.modifyPin},
 					 {method: 'POST', path: '/v1/saveSettings', config: roomController.saveSettings},
 					 {method: 'GET', path: '/v1/getSettings', config: roomController.getSettings},
-					 {method: 'GET', path: '/v1/getSeenReports', config: historyController.getSeenReports}
+					 {method: 'GET', path: '/v1/getSeenReports', config: historyController.getSeenReports},
+					 {method: 'POST', path: '/v1/reportModifySeen', config: historyController.reportModifySeen}
 
 
 				];

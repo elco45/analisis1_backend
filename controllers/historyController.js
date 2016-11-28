@@ -83,3 +83,14 @@ exports.getResolved = {
 
     }
   }
+
+  exports.reportModifySeen = {
+    handler: function(request, reply){
+      var reporte = report.findOne({ _id:request.payload.reporte._id},function(err,data){
+        data.seen=true;
+        data.save();
+        return reply(data)
+      });
+
+    }
+  }
