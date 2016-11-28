@@ -17,7 +17,7 @@ current_hour = current_hour* 60 * 60 *1000
 current_minutes = current_minutes * 60 * 1000
 current_seconds = current_seconds * 1000
 var current_time = current_hour+current_minutes+current_seconds
-var ms_till_reset 
+var ms_till_reset
 if(current_time <= ms_in_hour_to_reset){
   ms_till_reset = ms_in_hour_to_reset - current_time
 }else{
@@ -36,7 +36,7 @@ setInterval(function() {
             answer.idUser = [],
             answer.priority= answer.priority,
             answer.observation=answer.observation,
-            answer.time_reserved =answer.time_reserved 
+            answer.time_reserved =answer.time_reserved
             answer.save();
           });
 
@@ -61,6 +61,7 @@ exports.createRoom = {
      idUser: request.payload.idUser,
      priority: request.payload.priority,
      observation: request.payload.observation,
+
      time_reserved: "0hr"
    });
       //Guardando
@@ -96,8 +97,8 @@ exports.createRoom = {
                 respuesta[i].last_change_seen =false;
               respuesta[i].save();
             }
-          }) 
-        }); 
+          })
+        });
         return reply(answer);
       });
     }
@@ -112,7 +113,7 @@ exports.deleteRoom={
    room.findOneAndRemove({ room_id:request.payload.room_id }, function(err) {
     if (err) {
       throw err;
-    } 
+    }
     return reply('Eliminado exitosamente');
   });
  }
@@ -127,13 +128,13 @@ exports.getRoom = {
     var habitacion = room.find({room_id: request.payload.room_id},function(err,data){
       if(!err){
         var new_room = {
-          status: data[0].status,   
+          status: data[0].status,
           idUser: data[0].idUser,
           priority: data[0].priority,
           observation: data[0].observation,
           time_reserved: data[0].time_reserved
-          
-        }     
+
+        }
         return reply(new_room);
 
       }else{
@@ -161,8 +162,8 @@ exports.getAllRooms = {
 }
 
 exports.updateReDistributedRooms = {
-  handler:function(request,reply){  
- 
+  handler:function(request,reply){
+
      var habitacion = room.findOne({room_id:request.payload.room.room_id},function(err,room){
         room.status = room.status
         for(var i = 0; i < room.idUser.length; i++) {
@@ -173,8 +174,8 @@ exports.updateReDistributedRooms = {
         }
         room.idUser.push(request.payload.next_user)
         room.priority=request.payload.room.priority
-        room.observation=room.observation 
-        room.time_reserved =room.time_reserved 
+        room.observation=room.observation
+        room.time_reserved =room.time_reserved
         room.save(function(error1){
           var ctrl= control.find({},function(error2,respuesta){
             for (var i = 0; i < respuesta.length; i++) {
@@ -184,7 +185,7 @@ exports.updateReDistributedRooms = {
                 respuesta[i].last_change_seen =false;
               respuesta[i].save();
             }
-          }) 
+          })
         });
         return reply(room);
       });
@@ -205,7 +206,7 @@ exports.updateDistributedRooms = {
                 respuesta[i].last_change_seen =false;
               respuesta[i].save();
             }
-          }) 
+          })
         });
         return reply(response);
       });
@@ -213,7 +214,7 @@ exports.updateDistributedRooms = {
 }
 
 exports.getemproom={
- 
+
    handler: function(request, reply){
     var habitacion = room.find({},function(err,data){
       return reply(data)
@@ -270,4 +271,3 @@ exports.updatePriorityAfterSplice = {
     return reply('ok');
   }
 }
-

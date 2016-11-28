@@ -7,6 +7,7 @@ var RoomSchema = new mongoose.Schema({
 	priority: Number,
 	time_reserved: String,
 	observation: String
+
 });
 
 module.exports = mongoose.model('Room', RoomSchema);
