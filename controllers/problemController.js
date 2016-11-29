@@ -4,7 +4,7 @@ var problem = require('../schemas/problem');
 var control = require('../schemas/control');
 
 
-exports.getProblem = {
+exports.getProblemas = {
   handler: function(request, reply){
     var problema = problem.find({},function(err,data){
       return reply(data)
@@ -16,9 +16,8 @@ exports.getProblem = {
 exports.createProblem = {
   	handler: function(request, reply) {
 	    var problema = new problem({
-	    	problem_id: request.payload.problem_id,
-	    	problem_description: request.payload.problem_description,
-	    	problem_type: request.payload.problem_type
+	     	problem_description: request.payload.descripcion,
+	    	problem_type: request.payload.tipo
 	    	});
 		//Guardando
 		problema.save(function (err) {
@@ -38,7 +37,7 @@ exports.deleteProblem={
   //  strategy:'session'
   //},
   handler: function(request, reply){
-    problema.findOneAndRemove({ problem_id:request.payload.problem_id }, function(err) {
+    var problema = problem.findOneAndRemove({ _id:request.payload.id }, function(err) {
       if (err) {
         throw err;
       }
@@ -51,6 +50,18 @@ exports.deleteProblem={
 exports.modifProblem = {
   handler: function(request, reply) {
 
+    var problema = problem.findOne({_id:request.payload.id},function(err,answer){
+      answer.problem_description= request.payload.problem_description
+      answer.problem_type= request.payload.problem_type
+      answer.save();
+      return reply(answer);
+    });
+  }
+};
+
+exports.lastElement = {
+  handler: function(request, reply) {
+
     var problema = problem.findOne({problem_id:request.payload.problem_id},function(err,answer){
       answer.problem_description= request.payload.problem_description
       answer.problem_type= request.payload.problem_type
@@ -59,3 +70,5 @@ exports.modifProblem = {
     });
   }
 };
+
+

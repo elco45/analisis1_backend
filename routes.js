@@ -2,6 +2,7 @@ var usersController = require('./controllers/usersController');
 var roomController = require('./controllers/roomController');
 var authController = require('./controllers/authController');
 var historyController = require('./controllers/historyController');
+var problemController = require('./controllers/problemController');
 exports.endpoints = [{method: 'GET', path: '/', config: {handler: function(request, reply){reply('API v1, productos')}}},
 					 {method: 'POST', path: '/v1/register', config: usersController.createUser},
 					 {method: 'POST', path: '/v1/updateUser', config: usersController.modifUser},
@@ -30,7 +31,11 @@ exports.endpoints = [{method: 'GET', path: '/', config: {handler: function(reque
 					 {method: 'POST', path: '/v1/saveSettings', config: roomController.saveSettings},
 					 {method: 'GET', path: '/v1/getSettings', config: roomController.getSettings},
 					 {method: 'GET', path: '/v1/getSeenReports', config: historyController.getSeenReports},
-					 {method: 'POST', path: '/v1/reportModifySeen', config: historyController.reportModifySeen}
+					 {method: 'POST', path: '/v1/reportModifySeen', config: historyController.reportModifySeen},
+					 {method: 'POST', path: '/v1/crearProblema', config: problemController.createProblem},
+					 {method: 'GET', path: '/v1/getProblemas', config: problemController.getProblemas},
+					 {method: 'POST', path: '/v1/modificarProblema', config: problemController.modifProblem},
+					 {method: 'POST', path: '/v1/eliminarProblema', config: problemController.deleteProblem}
 
 
 				];
