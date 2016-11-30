@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 var ReportSchema = new mongoose.Schema({
   employee_username: String,
   room_number: Number,
-  problem_id: Number,
+  problem_id: String,
   room_state: String,
   date_reported: Date,
   resolved: Boolean,
