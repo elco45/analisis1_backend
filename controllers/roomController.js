@@ -86,7 +86,6 @@ setTimeout(reset, ms_till_reset);
 exports.requestTime = {
   handler: function(request,reply){
     var today = new Date();
-    console.log(today)
     return reply(today);
   }
 }
