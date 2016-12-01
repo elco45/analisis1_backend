@@ -25,14 +25,14 @@ exports.createRegister = {
         seen:false
 
 	   	});
-		//Guardando
-		reporte.save(function (err) {
-			if(err){
-			  	return reply(err);
-			}else{
-				return reply('Agregado exitosamente ');
-			}
-		});
+  		//Guardando
+  		reporte.save(function (err) {
+  			if(err){
+  			  	return reply(err);
+  			}else{
+  				return reply('Agregado exitosamente ');
+  			}
+  		});
   	}
 }
 

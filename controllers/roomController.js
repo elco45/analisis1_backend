@@ -3,8 +3,7 @@ var boom = require('boom');
 var room = require('../schemas/room');
 var control = require('../schemas/control');
 var settings = require('../schemas/settings')
-
-//set timer to restart the asigned rooms at 5 AM
+var report = require('../schemas/reports');
 
 var date = new Date();
 var current_hour = date.getHours();
@@ -12,7 +11,7 @@ var current_minutes = date.getMinutes();
 var current_seconds = date.getSeconds();
 
 var ms_in_day = 24*60*60*1000
-var ms_in_hour_to_reset = 14*60*60*1000 + 12*60*1000
+var ms_in_hour_to_reset = 11*60*60*1000 + 57*60*1000
 current_hour = current_hour* 60 * 60 *1000
 current_minutes = current_minutes * 60 * 1000
 current_seconds = current_seconds * 1000
@@ -23,31 +22,73 @@ if(current_time <= ms_in_hour_to_reset){
 }else{
   ms_till_reset = ms_in_day - current_time +  ms_in_hour_to_reset
 }
-console.log(ms_till_reset)
-/* NO BORRAR AUN
-setInterval(function() {
-     ms_till_reset = ms_in_day;
-     console.log(ms_till_reset)
-     console.log("entreee")
-     var habitacion = room.find({},function(err,data){
-        for (var i = 0; i < data.length; i++) {
-           var habitacion = room.findOne({room_id:data[i].room_id},function(err,answer){
-            answer.status = 0,
-            answer.idUser = [],
-            answer.priority= answer.priority,
-            answer.observation=answer.observation,
-            answer.time_reserved =answer.time_reserved
-            answer.save();
-          });
+console.log(current_time, ms_till_reset)
+var reset = function() {
+   ms_till_reset = ms_in_day;
 
-        }
+   console.log(ms_till_reset)
+   var habitacion = room.find({},function(err,data){
+      for (var i = 0; i < data.length; i++) {
+         var habitacion = room.findOne({room_id:data[i].room_id},function(err,answer){
+          if(answer.status === 1 || answer.status === 5){    
+            var employees_didnt_clean = "";
+            for (var j = 0; j < answer.idUser.length; j++) {
+                employees_didnt_clean +=answer.idUser[j].username
+                if(j < answer.id.length -1)
+                  employees_didnt_clean += ","
+            }        
+            var today = new Date()
+            var dd = today.getDate();
+            var mm = today.getMonth()+1; //January is 0!
+            var yyyy = today.getFullYear();
+
+            if(dd<10) {
+                dd='0'+dd
+            }
+
+            if(mm<10) {
+                mm='0'+mm
+            }
+
+            today = mm+'/'+dd+'/'+yyyy;
+            var reporte = new report({
+              employee_username: employees_didnt_clean,
+              room_number: answer.room_id,
+              problem_id: 0,
+              room_state: 6,
+              date_reported: today,
+              resolved: true,
+              seen:false
+
+            });
+            //Guardando
+            reporte.save();
+          }
+            
+          answer.status = 0//fue atendida asi que se resetea
+
+
+          answer.idUser = [],
+          answer.priority= -1,
+          answer.observation="",
+          answer.time_reserved =answer.time_reserved
+          answer.save();
+        });
+
+      }
     });
+  setTimeout(reset, ms_till_reset);
+}
 
-
-}, ms_till_reset);
-*/
+setTimeout(reset, ms_till_reset);
 //-----
 
+exports.requestTime = {
+  handler: function(request,reply){
+    var today = new Date();
+    return reply(today);
+  }
+}
 exports.createRoom = {
   /*auth: {
     mode:'required',
