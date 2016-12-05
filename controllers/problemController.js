@@ -72,3 +72,12 @@ exports.lastElement = {
 };
 
 
+
+  exports.getProble_by_room = {
+    handler: function(request, reply){
+      var problema = problem.find({_id:request.payload.id},function(err,data){
+        return reply(data)
+      });
+
+    }
+  }
