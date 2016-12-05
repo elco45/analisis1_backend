@@ -36,7 +36,7 @@ exports.endpoints = [{method: 'GET', path: '/', config: {handler: function(reque
 					 {method: 'GET', path: '/v1/getProblemas', config: problemController.getProblemas},
 					 {method: 'POST', path: '/v1/modificarProblema', config: problemController.modifProblem},
 					 {method: 'POST', path: '/v1/eliminarProblema', config: problemController.deleteProblem},
+					 {method: 'POST', path: '/v1/getProblemas_por_habitacion', config: problemController.getProble_by_room},
 					 {method: 'GET', path: '/v1/requestTime', config: roomController.requestTime}
 
-
-				];
+			];
