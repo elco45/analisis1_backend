@@ -7,7 +7,7 @@ var RoomSchema = new mongoose.Schema({
 	priority: Number,
 	time_reserved: String,
 	observation: String,
-	information: Number
+	idRoomType: Number
 
 });
 
