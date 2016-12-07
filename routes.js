@@ -41,5 +41,5 @@ exports.endpoints = [{method: 'GET', path: '/', config: {handler: function(reque
 					 {method: 'GET', path: '/v1/requestTime', config: roomController.requestTime},
 					 {method: 'GET', path: '/v1/getAllRoomType', config: roomTypeController.getAllRoomType},
 					 {method: 'POST', path: '/v1/createRoomType', config: roomTypeController.createRoomType},
-					 {method: 'GET', path: '/v1/getRoomType', config: roomTypeController.getRoomType}
+					 {method: 'POST', path: '/v1/getRoomType', config: roomTypeController.getRoomType}
 			];
