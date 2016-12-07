@@ -4,6 +4,7 @@ var room = require('../schemas/room');
 var control = require('../schemas/control');
 var settings = require('../schemas/settings')
 var report = require('../schemas/reports');
+var plantillas = require('../schemas/plantilla');
 
 var date = new Date();
 var current_hour = date.getHours();
@@ -312,5 +313,72 @@ exports.updatePriorityAfterSplice = {
       response.save();
     });
     return reply('ok');
+  }
+}
+
+exports.getPlantillas = {
+  handler : function(request,reply){
+
+    var plantilla =  plantillas.find({}, {plantilla_nombre:1,plantilla_descripcion:1, _id:0},function(err,response){
+        return reply(response)
+    })
+  }
+}
+
+exports.cargarPlantillas = {
+  handler : function(request,reply){
+
+    var habitaciones =  room.remove({},function(err,response1){
+        var plantilla =  plantillas.findOne({plantilla_nombre:request.payload.plantilla_nombre},function(err,response){
+              for (var i = 0; i < response.rooms_in_JSON.length; i++) {
+                var habitacion = new room({
+                 status: response.rooms_in_JSON[i].status,
+                 room_id: response.rooms_in_JSON[i].room_id,
+                 idUser: response.rooms_in_JSON[i].idUser,
+                 priority: response.rooms_in_JSON[i].priority,
+                 observation: response.rooms_in_JSON[i].observation,
+                 time_reserved: response.rooms_in_JSON[i].time_reserved
+                });
+                //Guardando
+                habitacion.save();
+            }
+            return reply("ok")
+        })
+    })
+  }
+}
+
+exports.createPlantillas = {
+  handler: function(request, reply) {
+    var request_info  = request.payload;
+    var habitaciones = room.find({},function(err,data){
+      var array = [];
+      var room_obj ;
+      for (var i = 0; i < data.length; i++) {
+         room_obj =  {
+          status: data[i].status,
+          room_id: data[i].room_id,
+          idUser: data[i].idUser,
+          priority: data[i].priority,
+          time_reserved: data[i].time_reserved,
+          observation: data[i].observation
+        }
+        array.push(room_obj)
+      }
+      
+      var plantilla = new plantillas({
+         plantilla_nombre: request.payload.plantilla_nombre,
+         plantilla_descripcion: request.payload.plantilla_descripcion,
+         rooms_in_JSON: array
+      });
+      //Guardando
+     plantilla.save(function (err) {
+        if(err){
+          return reply('el nombre debe ser unico ' + err);
+        }else{
+          return reply('Agregado exitosamente ');
+        }//fin else
+      });
+    });
   }
 }
