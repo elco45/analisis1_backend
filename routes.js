@@ -3,6 +3,7 @@ var roomController = require('./controllers/roomController');
 var authController = require('./controllers/authController');
 var historyController = require('./controllers/historyController');
 var problemController = require('./controllers/problemController');
+var roomTypeController = require('./controllers/RoomTypeController');
 exports.endpoints = [{method: 'GET', path: '/', config: {handler: function(request, reply){reply('API v1, productos')}}},
 					 {method: 'POST', path: '/v1/register', config: usersController.createUser},
 					 {method: 'POST', path: '/v1/updateUser', config: usersController.modifUser},
@@ -37,6 +38,8 @@ exports.endpoints = [{method: 'GET', path: '/', config: {handler: function(reque
 					 {method: 'POST', path: '/v1/modificarProblema', config: problemController.modifProblem},
 					 {method: 'POST', path: '/v1/eliminarProblema', config: problemController.deleteProblem},
 					 {method: 'POST', path: '/v1/getProblemas_por_habitacion', config: problemController.getProble_by_room},
-					 {method: 'GET', path: '/v1/requestTime', config: roomController.requestTime}
-
+					 {method: 'GET', path: '/v1/requestTime', config: roomController.requestTime},
+					 {method: 'GET', path: '/v1/getAllRoomType', config: roomTypeController.getAllRoomType},
+					 {method: 'POST', path: '/v1/createRoomType', config: roomTypeController.createRoomType},
+					 {method: 'GET', path: '/v1/getRoomType', config: roomTypeController.getRoomType}
 			];
