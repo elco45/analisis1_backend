@@ -26,7 +26,7 @@ exports.createRoomType = {
 
 exports.getRoomType = {
   handler: function(request, reply){
-    var reporte = type.findOne({_id: request.payload},function(err,data){
+    var reporte = type.findOne({_id: request.payload.idRoomType},function(err,data){
       return reply(data)
     });
   }

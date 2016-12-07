@@ -102,7 +102,7 @@ exports.createRoom = {
      idUser: request.payload.idUser,
      priority: request.payload.priority,
      observation: request.payload.observation,
-
+     idRoomType: request.payload.idRoomType,
      time_reserved: "0hr"
    });
       //Guardando
@@ -128,6 +128,7 @@ exports.createRoom = {
         answer.idUser = request.payload.room.idUser,
         answer.priority= request.payload.room.priority,
         answer.observation= request.payload.room.observation,
+        answer.idRoomType = request.payload.room.idRoomType,
         answer.time_reserved = request.payload.room.time_reserved
         answer.save(function(error1){
           var ctrl= control.find({},function(error2,respuesta){
@@ -173,6 +174,7 @@ exports.getRoom = {
           idUser: data[0].idUser,
           priority: data[0].priority,
           observation: data[0].observation,
+          idRoomType: data[0].idRoomType,
           time_reserved: data[0].time_reserved
 
         }
