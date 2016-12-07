@@ -37,6 +37,9 @@ exports.endpoints = [{method: 'GET', path: '/', config: {handler: function(reque
 					 {method: 'POST', path: '/v1/modificarProblema', config: problemController.modifProblem},
 					 {method: 'POST', path: '/v1/eliminarProblema', config: problemController.deleteProblem},
 					 {method: 'POST', path: '/v1/getProblemas_por_habitacion', config: problemController.getProble_by_room},
-					 {method: 'GET', path: '/v1/requestTime', config: roomController.requestTime}
+					 {method: 'GET', path: '/v1/requestTime', config: roomController.requestTime},
+					 {method: 'GET', path: '/v1/getPlantillas', config: roomController.getPlantillas},
+					 {method: 'POST', path: '/v1/createPlantillas', config: roomController.createPlantillas},
+					 {method: 'POST', path: '/v1/cargarPlantillas', config: roomController.cargarPlantillas}
 
 			];
