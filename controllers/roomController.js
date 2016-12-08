@@ -1,4 +1,4 @@
-var SHA3 = require("crypto-js/sha3");
+  var SHA3 = require("crypto-js/sha3");
 var boom = require('boom');
 var room = require('../schemas/room');
 var control = require('../schemas/control');
@@ -12,7 +12,7 @@ var current_minutes = date.getMinutes();
 var current_seconds = date.getSeconds();
 
 var ms_in_day = 24*60*60*1000
-var ms_in_hour_to_reset = 11*60*60*1000 + 57*60*1000
+var ms_in_hour_to_reset = 18*60*60*1000 + 02*60*1000
 current_hour = current_hour* 60 * 60 *1000
 current_minutes = current_minutes * 60 * 1000
 current_seconds = current_seconds * 1000
@@ -123,30 +123,32 @@ exports.createRoom = {
       strategy:'session'
     },*/
     handler: function(request, reply) {
+
+          console.log(request.payload)
       var habitacion = room.findOne({room_id:request.payload.room.room_id},function(err,answer){
-        var usuario = [];
-        for (var i = 0; i < answer.idUser.length; i++) {
-          var new_user = {
-              username: answer.idUser[i].username,   
-              name: answer.idUser[i].name,
-              employee_type: answer.idUser[i].employee_type,
-              status: answer.idUser[i].status,
-              role: answer.idUser[i].role,
-              id: answer.idUser[i].id,
-              cel: answer.idUser[i].cel,
-              tel: answer.idUser[i].tel,
-              direction: answer.idUser[i].direction,
-              birth_date: answer.idUser[i].birth_date,// dia/mes/año
-              civil_status: answer.idUser[i].civil_status,
-              children: answer.idUser[i].children,
-              observation: answer.idUser[i].observation,
-              pin: answer.idUser[i].pin 
-            } 
-            usuario.push(new_user);
-        };
+          var nuevo =[];
+         for (var i = 0; i < request.payload.room.idUser.length; i++) {
+             var param = {
+              username: request.payload.room.idUser[i].username,
+              name: request.payload.room.idUser[i].name,
+              employee_type: request.payload.room.idUser[i].employee_type,
+              status: request.payload.room.idUser[i].status,
+              role: request.payload.room.idUser[i].role,
+              id: request.payload.room.idUser[i].id,
+              cel: request.payload.room.idUser[i].cel,
+              tel: request.payload.room.idUser[i].tel,
+              direction: request.payload.room.idUser[i].direction,
+              birth_date: request.payload.room.idUser[i].birth_date,
+              civil_status: request.payload.room.idUser[i].civil_status,
+              children: request.payload.room.idUser[i].children,
+              observation:request.payload.room.idUser[i].observation,
+              pin: request.payload.room.idUser[i].pin
+            }
+            nuevo.push(param);
+         }
         answer.room_id = request.payload.room.room_id,
         answer.status = request.payload.room.status,
-        answer.idUser = usuario,
+        answer.idUser = nuevo,
         answer.priority= request.payload.room.priority,
         answer.observation= request.payload.room.observation,
         answer.idRoomType = request.payload.room.idRoomType,
@@ -236,6 +238,25 @@ exports.updateReDistributedRooms = {
             break;
           }
         }
+      
+         var param = {
+          username: request.payload.next_user.idUser.username,
+          name: request.payload.next_user.name,
+          employee_type: request.payload.next_user.employee_type,
+          status: request.payload.next_user.status,
+          role: request.payload.next_user.role,
+          id: request.payload.next_user.id,
+          cel: request.payload.next_user.cel,
+          tel: request.payload.next_user.tel,
+          direction: request.payload.next_user.direction,
+          birth_date: request.payload.next_user.birth_date,
+          civil_status: request.payload.next_user.civil_status,
+          children: request.payload.next_user.children,
+          observation:request.payload.next_user.observation,
+          pin: request.payload.next_user.pin
+        }
+   
+     
         room.idUser.push(request.payload.next_user)
 
         room.priority=request.payload.room.priority
@@ -259,8 +280,30 @@ exports.updateReDistributedRooms = {
 
 exports.updateDistributedRooms = {
   handler: function(request,reply){
+    console.log(request.payload)
      var habitacion = room.findOne({room_id:request.payload.room.room_id},function(err,response){
-        response.idUser = request.payload.room.idUser
+      var nuevo =[];
+     for (var i = 0; i < request.payload.room.idUser.length; i++) {
+         var param = {
+          username: request.payload.room.idUser[i].username,
+          name: request.payload.room.idUser[i].name,
+          employee_type: request.payload.room.idUser[i].employee_type,
+          status: request.payload.room.idUser[i].status,
+          role: request.payload.room.idUser[i].role,
+          id: request.payload.room.idUser[i].id,
+          cel: request.payload.room.idUser[i].cel,
+          tel: request.payload.room.idUser[i].tel,
+          direction: request.payload.room.idUser[i].direction,
+          birth_date: request.payload.room.idUser[i].birth_date,
+          civil_status: request.payload.room.idUser[i].civil_status,
+          children: request.payload.room.idUser[i].children,
+          observation:request.payload.room.idUser[i].observation,
+          pin: request.payload.room.idUser[i].pin
+        }
+        nuevo.push(param);
+     }
+     
+        response.idUser = nuevo
         response.priority=request.payload.room.priority
         response.save(function(error1){
           var ctrl= control.find({},function(error2,respuesta){
