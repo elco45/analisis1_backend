@@ -236,22 +236,6 @@ exports.updateReDistributedRooms = {
             break;
           }
         }
-        /*var new_user = {
-              username: request.payload.next_user.username,   
-              name: request.payload.next_user.name,
-              employee_type: request.payload.next_user.employee_type,
-              status: request.payload.next_user.status,
-              role: request.payload.next_user.role,
-              id: request.payload.next_user.id,
-              cel: request.payload.next_user.cel,
-              tel: request.payload.next_user.tel,
-              direction: request.payload.next_user.direction,
-              birth_date: request.payload.next_user.birth_date,// dia/mes/año
-              civil_status: request.payload.next_user.civil_status,
-              children: request.payload.next_user.children,
-              observation: request.payload.next_user.observation,
-              pin: request.payload.next_user.pin 
-        }*/ 
         room.idUser.push(request.payload.next_user)
 
         room.priority=request.payload.room.priority
@@ -276,26 +260,6 @@ exports.updateReDistributedRooms = {
 exports.updateDistributedRooms = {
   handler: function(request,reply){
      var habitacion = room.findOne({room_id:request.payload.room.room_id},function(err,response){
-        /*var usuario = [];
-        for (var i = 0; i < response.idUser.length; i++) {
-          var new_user = {
-              username: response.idUser[i].username,   
-              name: response.idUser[i].name,
-              employee_type: response.idUser[i].employee_type,
-              status: response.idUser[i].status,
-              role: response.idUser[i].role,
-              id: response.idUser[i].id,
-              cel: response.idUser[i].cel,
-              tel: response.idUser[i].tel,
-              direction: response.idUser[i].direction,
-              birth_date: response.idUser[i].birth_date,// dia/mes/año
-              civil_status: response.idUser[i].civil_status,
-              children: response.idUser[i].children,
-              observation: response.idUser[i].observation,
-              pin: response.idUser[i].pin 
-            } 
-          usuario.push(new_user);
-        };*/
         response.idUser = request.payload.room.idUser
         response.priority=request.payload.room.priority
         response.save(function(error1){
