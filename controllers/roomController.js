@@ -127,7 +127,6 @@ exports.createRoom = {
           console.log(request.payload)
       var habitacion = room.findOne({room_id:request.payload.room.room_id},function(err,answer){
           var nuevo =[];
-          console.log("********************************************************")
          for (var i = 0; i < request.payload.room.idUser.length; i++) {
              var param = {
               username: request.payload.room.idUser[i].username,
@@ -147,7 +146,6 @@ exports.createRoom = {
             }
             nuevo.push(param);
          }
-         console.log(nuevo)
         answer.room_id = request.payload.room.room_id,
         answer.status = request.payload.room.status,
         answer.idUser = nuevo,
@@ -260,6 +258,7 @@ exports.updateReDistributedRooms = {
    
      
         room.idUser.push(request.payload.next_user)
+
         room.priority=request.payload.room.priority
         room.observation=room.observation
         room.time_reserved =room.time_reserved
