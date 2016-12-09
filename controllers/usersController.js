@@ -9,7 +9,7 @@ exports.createUser = {
 	},*/
 	handler: function(request, reply) {
 		//console.log("Es esto:   "+request.payload);
-
+   console.log(request.payload);
 		var usuario = new user({
 			username: request.payload.username,
 			password:SHA3(request.payload.password),
