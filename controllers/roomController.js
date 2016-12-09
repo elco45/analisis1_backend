@@ -102,7 +102,7 @@ exports.createRoom = {
      idUser: request.payload.idUser,
      priority: request.payload.priority,
      observation: request.payload.observation,
-
+     
      time_reserved: "0hr"
    });
       //Guardando
