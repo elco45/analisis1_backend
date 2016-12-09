@@ -4,6 +4,7 @@ var room = require('../schemas/room');
 var control = require('../schemas/control');
 var settings = require('../schemas/settings')
 var report = require('../schemas/reports');
+var plantillas = require('../schemas/plantilla');
 
 var date = new Date();
 var current_hour = date.getHours();
@@ -102,7 +103,7 @@ exports.createRoom = {
      idUser: request.payload.idUser,
      priority: request.payload.priority,
      observation: request.payload.observation,
-     
+     idRoomType: request.payload.idRoomType,
      time_reserved: "0hr"
    });
       //Guardando
@@ -126,7 +127,6 @@ exports.createRoom = {
           console.log(request.payload)
       var habitacion = room.findOne({room_id:request.payload.room.room_id},function(err,answer){
           var nuevo =[];
-          console.log("********************************************************")
          for (var i = 0; i < request.payload.room.idUser.length; i++) {
              var param = {
               username: request.payload.room.idUser[i].username,
@@ -146,12 +146,12 @@ exports.createRoom = {
             }
             nuevo.push(param);
          }
-         console.log(nuevo)
         answer.room_id = request.payload.room.room_id,
         answer.status = request.payload.room.status,
         answer.idUser = nuevo,
         answer.priority= request.payload.room.priority,
         answer.observation= request.payload.room.observation,
+        answer.idRoomType = request.payload.room.idRoomType,
         answer.time_reserved = request.payload.room.time_reserved
         answer.save(function(error1){
           var ctrl= control.find({},function(error2,respuesta){
@@ -197,6 +197,7 @@ exports.getRoom = {
           idUser: data[0].idUser,
           priority: data[0].priority,
           observation: data[0].observation,
+          idRoomType: data[0].idRoomType,
           time_reserved: data[0].time_reserved
 
         }
@@ -257,6 +258,7 @@ exports.updateReDistributedRooms = {
    
      
         room.idUser.push(request.payload.next_user)
+
         room.priority=request.payload.room.priority
         room.observation=room.observation
         room.time_reserved =room.time_reserved
@@ -375,5 +377,72 @@ exports.updatePriorityAfterSplice = {
       response.save();
     });
     return reply('ok');
+  }
+}
+
+exports.getPlantillas = {
+  handler : function(request,reply){
+
+    var plantilla =  plantillas.find({}, {plantilla_nombre:1,plantilla_descripcion:1, _id:0},function(err,response){
+        return reply(response)
+    })
+  }
+}
+
+exports.cargarPlantillas = {
+  handler : function(request,reply){
+
+    var habitaciones =  room.remove({},function(err,response1){
+        var plantilla =  plantillas.findOne({plantilla_nombre:request.payload.plantilla_nombre},function(err,response){
+              for (var i = 0; i < response.rooms_in_JSON.length; i++) {
+                var habitacion = new room({
+                 status: response.rooms_in_JSON[i].status,
+                 room_id: response.rooms_in_JSON[i].room_id,
+                 idUser: response.rooms_in_JSON[i].idUser,
+                 priority: response.rooms_in_JSON[i].priority,
+                 observation: response.rooms_in_JSON[i].observation,
+                 time_reserved: response.rooms_in_JSON[i].time_reserved
+                });
+                //Guardando
+                habitacion.save();
+            }
+            return reply("ok")
+        })
+    })
+  }
+}
+
+exports.createPlantillas = {
+  handler: function(request, reply) {
+    var request_info  = request.payload;
+    var habitaciones = room.find({},function(err,data){
+      var array = [];
+      var room_obj ;
+      for (var i = 0; i < data.length; i++) {
+         room_obj =  {
+          status: data[i].status,
+          room_id: data[i].room_id,
+          idUser: data[i].idUser,
+          priority: data[i].priority,
+          time_reserved: data[i].time_reserved,
+          observation: data[i].observation
+        }
+        array.push(room_obj)
+      }
+      
+      var plantilla = new plantillas({
+         plantilla_nombre: request.payload.plantilla_nombre,
+         plantilla_descripcion: request.payload.plantilla_descripcion,
+         rooms_in_JSON: array
+      });
+      //Guardando
+     plantilla.save(function (err) {
+        if(err){
+          return reply('el nombre debe ser unico ' + err);
+        }else{
+          return reply('Agregado exitosamente ');
+        }//fin else
+      });
+    });
   }
 }
