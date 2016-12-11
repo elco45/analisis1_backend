@@ -104,6 +104,7 @@ exports.createRoom = {
      priority: request.payload.priority,
      observation: request.payload.observation,
      idRoomType: request.payload.idRoomType,
+     arreglo_problemas: request.payload.idUser,
      time_reserved: "0hr"
    });
       //Guardando
@@ -124,7 +125,7 @@ exports.createRoom = {
     },*/
     handler: function(request, reply) {
 
-          console.log(request.payload)
+    
       var habitacion = room.findOne({room_id:request.payload.room.room_id},function(err,answer){
           var nuevo =[];
          for (var i = 0; i < request.payload.room.idUser.length; i++) {
@@ -146,9 +147,12 @@ exports.createRoom = {
             }
             nuevo.push(param);
          }
+         console.log(request.payload);
+
         answer.room_id = request.payload.room.room_id,
         answer.status = request.payload.room.status,
         answer.idUser = nuevo,
+        answer.arreglo_problemas =request.payload.room.arreglo_problemas,
         answer.priority= request.payload.room.priority,
         answer.observation= request.payload.room.observation,
         answer.idRoomType = request.payload.room.idRoomType,
@@ -198,7 +202,9 @@ exports.getRoom = {
           priority: data[0].priority,
           observation: data[0].observation,
           idRoomType: data[0].idRoomType,
+          arreglo_problemas: [0].arreglo_problemas,
           time_reserved: data[0].time_reserved
+
 
         }
         return reply(new_room);
@@ -220,6 +226,7 @@ exports.getAllRooms = {
   },*/
   handler: function(request, reply){
     var habitacion = room.find({},function(err,data){
+      console.log(data);
       return reply(data)
     });
 
