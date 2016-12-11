@@ -46,5 +46,6 @@ exports.endpoints = [{method: 'GET', path: '/', config: {handler: function(reque
 					 {method: 'POST', path: '/v1/createPlantillas', config: roomController.createPlantillas},
 					 {method: 'POST', path: '/v1/cargarPlantillas', config: roomController.cargarPlantillas},
 					 {method: 'POST', path: '/v1/getproble_para_habitacion', config: historyController.getReports_de_habitacion_especifica},
-					 {method: 'POST', path: '/v1/updateRoomProblems', config: roomController.updateRoomProblems}
+					 {method: 'POST', path: '/v1/updateRoomProblems', config: roomController.updateRoomProblems},
+					 {method: 'POST', path: '/v1/getReport', config: historyController.getReport}
 			];

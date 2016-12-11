@@ -99,3 +99,12 @@ exports.getResolved = {
     }
   }
 
+  exports.getReport = {
+    handler: function(request, reply){
+      var reporte = report.findOne({ _id:request.payload._id},function(err,data){
+        return reply(data)
+      });
+
+    }
+  }
+
