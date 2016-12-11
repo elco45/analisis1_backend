@@ -23,11 +23,9 @@ if(current_time <= ms_in_hour_to_reset){
 }else{
   ms_till_reset = ms_in_day - current_time +  ms_in_hour_to_reset
 }
-console.log(current_time, ms_till_reset)
 var reset = function() {
    ms_till_reset = ms_in_day;
 
-   console.log(ms_till_reset)
    var habitacion = room.find({},function(err,data){
       for (var i = 0; i < data.length; i++) {
          var habitacion = room.findOne({room_id:data[i].room_id},function(err,answer){
@@ -104,7 +102,7 @@ exports.createRoom = {
      priority: request.payload.priority,
      observation: request.payload.observation,
      idRoomType: request.payload.idRoomType,
-     arreglo_problemas: request.payload.idUser,
+     arreglo_problemas: request.payload.arreglo_problemas,
      time_reserved: "0hr"
    });
       //Guardando
@@ -117,6 +115,22 @@ exports.createRoom = {
       });
     }
   };
+  //Modificar arreglo_problemas de habitacion
+  exports.updateRoomProblems = {
+    handler: function(request, reply) {
+      var habitacion = room.findOne({room_id:request.payload.room_id},function(err,answer){
+        var array = answer.arreglo_problemas
+        var index = array.indexOf(request.payload.report_id);
+        if (index > -1) {
+          array.splice(index, 1);
+        }
+        answer.arreglo_problemas = array;
+        answer.save();
+        return reply(answer);
+      })
+    }
+  }
+
   // Modificar las habitaciones
   exports.modifRoom = {
     /*auth: {
@@ -147,7 +161,6 @@ exports.createRoom = {
             }
             nuevo.push(param);
          }
-         console.log(request.payload);
 
         answer.room_id = request.payload.room.room_id,
         answer.status = request.payload.room.status,
@@ -202,7 +215,7 @@ exports.getRoom = {
           priority: data[0].priority,
           observation: data[0].observation,
           idRoomType: data[0].idRoomType,
-          arreglo_problemas: [0].arreglo_problemas,
+          arreglo_problemas: data[0].arreglo_problemas,
           time_reserved: data[0].time_reserved
 
 
@@ -226,7 +239,6 @@ exports.getAllRooms = {
   },*/
   handler: function(request, reply){
     var habitacion = room.find({},function(err,data){
-      console.log(data);
       return reply(data)
     });
 
@@ -287,7 +299,6 @@ exports.updateReDistributedRooms = {
 
 exports.updateDistributedRooms = {
   handler: function(request,reply){
-    console.log(request.payload)
      var habitacion = room.findOne({room_id:request.payload.room.room_id},function(err,response){
       var nuevo =[];
      for (var i = 0; i < request.payload.room.idUser.length; i++) {

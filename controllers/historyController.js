@@ -59,14 +59,8 @@ exports.getResolved = {
     //Funcion para actualizar el estado de problema
  		 handler: function(request, reply) {
 
-      var reporte = report.findOne({room_number:request.payload.room_number},function(err,answer){
-        answer.employee_username =request.payload.employee_username,
-        answer.room_number = request.payload.room_number,
-        answer.problem_id = request.payload.problem_id,
-        answer.room_state= request.payload.room_state,
-        answer.date_reported= request.payload.date_reported,
-        answer.resolved = request.payload.resolved,
-        answer.seen = request.payload.seen,
+      var reporte = report.findOne({_id:request.payload._id},function(err,answer){
+        answer.resolved = true;
         answer.save(function(error1){//Actualizar estado de problemas
           var ctrl= control.find({},function(error2,respuesta){
             for (var i = 0; i < respuesta.length; i++) {
