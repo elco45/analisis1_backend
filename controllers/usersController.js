@@ -27,7 +27,7 @@ exports.createUser = {
     //  schedule : [],
       observation: request.payload.observation,
       photo: request.payload.photo,
-      pin: null
+      pin: request.payload.pin
 
 		});
   	  //Guardando
@@ -51,11 +51,11 @@ exports.createUser = {
   	handler: function(request, reply) {
       
   		var usuario = user.findOne({username:request.payload.username},function(err,answer){
-        
+        console.log(request.payload)
         if(request.payload.password){          
            answer.password = SHA3(request.payload.password)
         }
-  			answer.name= request.payload.nombre
+  			answer.name= request.payload.name
   			answer.employee_type= request.payload.employee_type
   			answer.status= request.payload.status
         answer.pin = request.payload.pin
@@ -68,6 +68,7 @@ exports.createUser = {
       //  schedule : [],
         answer.observation = request.payload.observation
         answer.photo = request.payload.photo
+        
   			answer.save();
   			return reply(answer);
   		});
@@ -104,11 +105,13 @@ exports.createUser = {
               role: data[i].role,
               id: data[i].id,
               cel: data[i].cel,
+              password: data[i].password,
               tel: data[i].tel,
               direction: data[i].direction,
               birth_date: data[i].birth_date,// dia/mes/año
               civil_status: data[i].civil_status,
               children: data[i].children,
+              pi:data[i].pin,
             //  schedule : [],
               observation: data[i].observation,
               photo: data[i].photo 
