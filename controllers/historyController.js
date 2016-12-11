@@ -13,6 +13,16 @@ exports.getReports = {
   }
 }
 
+exports.getReports_de_habitacion_especifica= {
+  handler: function(request, reply){
+    var reporte = report.find({room_number:request.payload.room_number,resolved: false},function(err,data){
+      return reply(data)
+    });
+
+  }
+}
+
+
 exports.createRegister = {
   	handler: function(request, reply) {
 	    var reporte = new report({
