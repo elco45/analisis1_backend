@@ -27,7 +27,7 @@ exports.createUser = {
     //  schedule : [],
       observation: request.payload.observation,
       photo: request.payload.photo,
-      pin: request.payload.pin
+      pin: null
 
 		});
   	  //Guardando
@@ -105,7 +105,6 @@ exports.createUser = {
               role: data[i].role,
               id: data[i].id,
               cel: data[i].cel,
-              password: data[i].password,
               tel: data[i].tel,
               direction: data[i].direction,
               birth_date: data[i].birth_date,// dia/mes/año
