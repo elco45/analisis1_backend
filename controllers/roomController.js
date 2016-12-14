@@ -79,7 +79,7 @@ var reset = function() {
   setTimeout(reset, ms_till_reset);
 }
 
-setTimeout(reset, ms_till_reset);
+//setTimeout(reset, ms_till_reset);
 //-----
 
 exports.requestTime = {
