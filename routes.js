@@ -3,7 +3,7 @@ var roomController = require('./controllers/roomController');
 var authController = require('./controllers/authController');
 var historyController = require('./controllers/historyController');
 var problemController = require('./controllers/problemController');
-var roomTypeController = require('./controllers/RoomTypeController');
+var roomTypeController = require('./controllers/roomTypeController');
 exports.endpoints = [{method: 'GET', path: '/', config: {handler: function(request, reply){reply('API v1, productos')}}},
 					 {method: 'POST', path: '/v1/register', config: usersController.createUser},
 					 {method: 'POST', path: '/v1/updateUser', config: usersController.modifUser},
