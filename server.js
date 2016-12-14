@@ -9,7 +9,8 @@ server.connection({
     port: ~~process.env.PORT || 8000,
     routes: { cors: {
                     credentials: true,
-                    origin: ["*"]
+                    origin: ["*"],
+                    headers: ["Content-Type"]
                 }
               }
 });
